@@ -90,6 +90,7 @@ def search_word():
 	path = f"{str(pathlib.Path(__file__).parent.resolve().as_posix())}/uploads/"
 	key_word = request.form['key_word']
 	articles = []
+	result_spy = ""
 	for file in os.listdir(path) :
 		f = open(path+file,"r")
 		article = f.read()
@@ -106,6 +107,7 @@ def search_word():
 		text_html = text_html.replace("\n\n","\n")
 		text_html = text_html.replace("<!DOCTYPE html>","")
 		result_spy += text_html
+	bo = True
 	dictionary = Dictionary(articles)
 	result_word = dictionary.token2id.get(key_word)
 	bool_search = True
@@ -124,7 +126,7 @@ def search_word():
 	sorted_tfidf_weights = sorted(tfidf_weights, key=lambda w: w[1], reverse=True)
 	for term_id, weight in sorted_tfidf_weights[:5]:
 		top_tfidf.append(f'{dictionary.get(term_id)}, {weight}')	
-	return render_template("index.html",top_word = sorted_word_count[:5],dictionary = dictionary,bool_search = bool_search,result_word = result_word, key_word = key_word, top_tfidf = top_tfidf,result_spy = result_spy)
+	return render_template("index.html",top_word = sorted_word_count[:5],dictionary = dictionary,bool_search = bool_search,result_word = result_word, key_word = key_word, top_tfidf = top_tfidf,result_spy = result_spy, bo = bo)
 
 if __name__ == "__main__":
 	app.run(debug=True)
