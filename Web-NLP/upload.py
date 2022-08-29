@@ -1,5 +1,5 @@
 #Web
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 import os, shutil
 from flaskext.markdown import Markdown
 #NLP
@@ -45,7 +45,6 @@ def upload_file():
 			path = f"{str(pathlib.Path(__file__).parent.resolve().as_posix())}/uploads/{filename}"
 			file.save(path)
 
-		directory = 'C:/Users/thana/Desktop/Web-NLP/uploads'
 		articles = []
 		result_spy = ""
 		for file in files :
